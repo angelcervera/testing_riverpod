@@ -18,11 +18,10 @@ class MyHomeAsyncValue extends StatelessWidget {
       builder: (context, watch, child) => ElevatedButton(
         child: Text('Call'),
         onPressed: () {
-          watch(voidFutureProvider("From the onPress")).when(
-            data: (value) => print("Done from the button!!!"),
-            loading: () => print("Loading...."),
-            error: (error, stackTrace) => print("Error $error"),
-          );
+          final value = context.read(voidFutureProvider("From the onPress").future);
+          value
+              .then((value) =>  print("Done from the button!!!"))
+              .onError((error, stackTrace) => print("Error $error"));
         },
       ),
     );
